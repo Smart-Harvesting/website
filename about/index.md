@@ -7,7 +7,4 @@ Up to now, this work has been done manually in many facilities and is therefore 
 In other cases, where technical support is already being used, specialized software programs, known as wrappers, are used for this purpose, which have to be created and maintained by expert software developers.
 The focus of our project is therefore on the development of low-maintenance wrappers, which can be easily operated by non-information scientists and continuously adapted to new website structures.
 
-* [Code](/code)
-* [Publications](/publications)
-
-
+[Initial Press Release](https://www.th-koeln.de/hochschule/smarte-informationsextraktion-fuer-literaturdatenbanken_41116.php)
