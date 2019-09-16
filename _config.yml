@@ -28,10 +28,12 @@ url: "" # the base hostname & protocol for your site, e.g. http://example.com
 #github_username:  jekyll
 
 # Build settings
-theme: minima
+# theme: minima
 plugins:
   - jekyll-feed
-  
+
+remote_theme: "mmistakes/minimal-mistakes@4.16.6"
+
 markdown: CommonMarkGhPages
 
 commonmark:
