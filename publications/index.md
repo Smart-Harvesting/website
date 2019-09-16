@@ -3,11 +3,11 @@ layout: default
 title: Publications and Talks
 ---
 
-### Talks 
+# Talks 
 
 lorem ipsum
 
-### Publications 
+# Publications 
 
 {% include_relative sh2.html %}
 
