@@ -5,11 +5,10 @@ title: Publications and Talks
 
 ## Talks
 
-<!--- 
-2019
+### [2019]()
 
 **Learning. Knowledge. Data. Analytics. (LWDA), September 30 - October 2, 2019**
-    - Presentation of our work on "Prioritizing and Scheduling Conferences for Metadata Harvesting in Dblp" (resubmit). Slides available [here]().-->
+    - Presentation of our work on "Prioritizing and Scheduling Conferences for Metadata Harvesting in Dblp" (resubmit). Slides available [here](https://zenodo.org/record/3466811).
 
 ### [2018]()
 
