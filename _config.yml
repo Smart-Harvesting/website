@@ -37,6 +37,10 @@ markdown: CommonMarkGhPages
 commonmark:
   options: ["SMART", "FOOTNOTES"]
   extensions: ["strikethrough", "autolink", "table", "tagfilter"]
+  
+# Post settings
+show_excerpts: true # set to true to show excerpts on the homepage
+#excerpt_separator: '<!--more-->'
 
 # Exclude from processing.
 # The following items will not be processed, by default.
