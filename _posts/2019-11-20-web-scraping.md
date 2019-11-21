@@ -192,7 +192,7 @@ Programmers proficient in R can also make use of a library for web scraping whic
 Inspired by BeautifulSoup, it is also a libary that works on HTML and XML and can select parts of these documents with the help of CSS or XPath ("if you’ve a glutton for punishment") selectors.
 It can extract, modify and submit HTML forms and also simulate navigating the website with a browser (going back and forward, following links etc.).
 
-```python
+```r
 library('rvest')
 
 #Using CSS selectors to scrape the title section
@@ -215,7 +215,7 @@ For Java, a simple library for HTML Parsing is [JSoup](https://jsoup.org/), obvi
 
 Here's a small example on how to fetch the books' titles with JSoup. For the sake of brevity, this code is imcomplete with regards to imports and exception handling.
 
-```Java
+```java
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
@@ -242,7 +242,7 @@ You can see that JSoup is working similarly to BeautifulSoup-
 
 [Jaunt](https://jaunt-api.com/) is another library for Java, especially suitable in cases where no Javascript is needed, as this is not supported.
 
-```Java
+```java
 import com.jaunt.*;
 
 public class BookScraperDemo {
