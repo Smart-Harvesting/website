@@ -47,6 +47,12 @@ commonmark:
   options: ["SMART", "FOOTNOTES"]
   extensions: ["strikethrough", "autolink", "table", "tagfilter"]
   
+defaults:
+  - scope:
+      path: "assets/img"
+    values:
+      image: true
+
 # Post settings
 show_excerpts: true # set to true to show excerpts on the homepage
 #excerpt_separator: '<!--more-->'
