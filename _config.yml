@@ -1,79 +1,42 @@
-# Welcome to Jekyll!
-#
-# This config file is meant for settings that affect your whole blog, values
-# which you are expected to set up once and rarely edit after that. If you find
-# yourself editing this file very often, consider using Jekyll's data files
-# feature for the data you need to update frequently.
-#
-# For technical reasons, this file is *NOT* reloaded automatically when you use
-# 'bundle exec jekyll serve'. If you change this file, please restart the server process.
-#
-# If you need help with YAML syntax, here are some quick references for you: 
-# https://learn-the-web.algonquindesign.ca/topics/markdown-yaml-cheat-sheet/#yaml
-# https://learnxinyminutes.com/docs/yaml/
-#
-# Site settings
-# These are used to personalize your new site. If you look in the HTML files,
-# you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
-# You can create any custom variable you would like, and they will be accessible
-# in the templates via {{ site.myvariable }}.
-
 title: Smart Harvesting II
-#email: your-email@example.com
-description: >- # this means to ignore newlines until "baseurl:"
-  Project website of DFG-funded project "Smart Harvesting II"
-baseurl: "/smart-harvesting2" # the subpath of your site, e.g. /blog
-url: "" # the base hostname & protocol for your site, e.g. http://example.com
-#twitter_username: jekyllrb
-#github_username:  jekyll
-
-# Build settings
-theme: minima
+baseurl: /
+permalink: '/:title/'
+collections:
+  posts:
+    permalink: '/posts/:title/'
+layout_style: overflow
+palette: blue
+header:
+  title: Smart Harvesting II
+  #tagline: Header Tagline
+  profile_img:
+  #profile_img: images/avatar.png
+  bg: dark
+  has_nav: true
+  has_social: false
+footer:
+  content: '&copy; Stackbit-Fresh. All rights reserved.'
+  #links:
+  #  - text: Made with Stackbit
+  #    url: 'https://www.stackbit.com'
+  #    new_window: true
+sass:
+  indentWidth: 4
+  style: nested
+  precision: 10
 plugins:
-  - jekyll-feed
-
-markdown: kramdown #CommonMarkGhPages
-# Jekyll 3 now only supports Kramdown for Markdown
-kramdown:
-    # Use GitHub flavored markdown, including triple backtick fenced code blocks
-    input: GFM
-    # Jekyll 3 and GitHub Pages now only support rouge for syntax highlighting
-    syntax_highlighter: rouge
-    syntax_highlighter_opts:
-        # Use existing pygments syntax highlighting css
-        css_class: 'highlight'
-
-commonmark:
-  options: ["SMART", "FOOTNOTES"]
-  extensions: ["strikethrough", "autolink", "table", "tagfilter"]
-  
-defaults:
-  - scope:
-      path: "assets/img"
-    values:
-      image: true
-
-# Post settings
-show_excerpts: true # set to true to show excerpts on the homepage
-#excerpt_separator: '<!--more-->'
-
-# Exclude from processing.
-# The following items will not be processed, by default.
-# Any item listed under the `exclude:` key here will be automatically added to
-# the internal "default list".
-#
-# Excluded items can be processed by explicitly listing the directories or
-# their entries' file path in the `include:` list.
-#
+  - jekyll-menus
 exclude:
-    - getpubs.py
-#   - .sass-cache/
-#   - .jekyll-cache/
-#   - gemfiles/
-#   - Gemfile
-#   - Gemfile.lock
-#   - node_modules/
-#   - vendor/bundle/
-#   - vendor/cache/
-#   - vendor/gems/
-#   - vendor/ruby/
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
+  - ssg-build.sh
+  - LICENSE.md
+  - README.md
+  - netlify.toml
+  - stackbit-build.sh
+  - stackbit-pull.js
