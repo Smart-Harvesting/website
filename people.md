@@ -25,7 +25,7 @@ layout: page
 <br/><br/>
 
 
-<img style="float: right;" src="../images/TH-Köln-logo-03.png" alt="TH-Köln"
+<img style="float: right;" src="../images/TH-Köln-logo-03.png" alt="TH-Köln"
 	title="TH-Köln" width="200"/>
 ### TH Köln - University of Applied Sciences
 - [Prof. Dr. Philipp Schaer](https://ir.web.th-koeln.de/people/philipp-schaer)
