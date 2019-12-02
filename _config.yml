@@ -1,5 +1,5 @@
 title: Smart Harvesting II
-baseurl: /
+baseurl: /smart-harvesting2
 permalink: '/:title/'
 collections:
   posts:
