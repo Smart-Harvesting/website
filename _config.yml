@@ -1,5 +1,5 @@
 title: Smart Harvesting II
-baseurl: /
+baseurl: /smart-harvesting2
 permalink: '/:title/'
 collections:
   posts:
@@ -24,6 +24,8 @@ sass:
   indentWidth: 4
   style: nested
   precision: 10
+#Build
+destination: docs
 plugins:
   - jekyll-menus
 exclude:
