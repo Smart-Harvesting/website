@@ -1,67 +1,33 @@
-<header id="masthead" class="site-header {{ site.header.bg }}">
-  <div class="site-header-wrap">
-    <div class="site-header-inside">
-      <div class="site-branding">
-        {% assign profile_img_is_not_empty = site.header.profile_img | is_not_empty %}
-        {% if profile_img_is_not_empty %}
-        <p class="profile">
-          <a href='{{ '/' | relative_url }}'><img src="{{ site.header.profile_img | relative_url }}"
-              class="avatar" alt="Author Avatar" /></a>
-        </p><!-- .profile -->
-        {% endif %}
-        <div class="site-identity">
-          {% if page.layout == 'home' or page.layout == 'blog' %}
-          <h1 class="site-title"><a href='{{ '/' | relative_url }}'>{{ site.header.title }}</a></h1>
-          {% else %}
-          <p class="site-title"><a href='{{ '/' | relative_url }}'>{{ site.header.title }}</a></p>
-          {% endif %}
-          {% assign tagline_is_not_empty = site.header.tagline | is_not_empty %}
-          {% if tagline_is_not_empty %}
-          <p class="site-description">{{ site.header.tagline }}</p>
-          {% endif %}
-        </div><!-- .site-identity -->
+{% if page.header %}
+  <header role="banner" id="header">
+      <div class="site-header medium-12 columns">
+        <nav class="hide-for-small-only hide-for-ipad">
+          {% include socials.html %}
+        </nav>
+        <div class="header-logo wraptainer">
+          <a href="{{ site.github.url }}/"><img src="{{ site.github.url }}/{{ page.header }}" alt="{{ site.title }} banner image" title="{{ site.title }} banner image" class="center"></a>
+        </div>
+        <nav class="hide-for-small-only hide-for-ipad">
+          {% include navigation.html %}
+        </nav>
+      </div>
+  </header>
+  
+  {% elsif site.header %}
+    <header role="banner" id="header" class="small-12 medium-3 columns">
+      <div class="site-header medium-12 columns">
+        <nav class="hide-for-small-only hide-for-ipad">
+          {% include socials.html %}
+        </nav>
+        <div class="header-logo wraptainer">
+          <a href="{{ site.github.url }}/"><img src="{{ site.github.url }}/{{ site.header }}" alt="{{ site.title }} banner image" title="{{ site.title }} banner image" class="center"></a>
+        </div>
+        <nav class="hide-for-small-only hide-for-ipad">
+          {% include navigation.html %}
+        </nav>
+      </div>
+    </header>
+  
+  {% else %}
 
-        <button id="menu-toggle" class="menu-toggle"><span class="screen-reader-text">Menu</span><span class="icon-menu"
-            aria-hidden="true"></span></button>
-
-      </div><!-- .site-branding -->
-
-    <nav id="main-navigation" class="site-navigation" aria-label="Main Navigation">
-      <div class="site-nav-wrap">
-        <div class="site-nav-inside">
-          <ul class="menu">
-
-            <li class="menu-item  current-menu-item">
-              <a href="/">Home</a>
-            </li>
-
-            <li class="menu-item ">
-              <a href="/people/">People</a>
-            </li>
-
-            <li class="menu-item ">
-              <a href="/code/">Code</a>
-            </li>
-
-            <li class="menu-item ">
-              <a href="/blog/">Blog</a>
-            </li>
-
-            <li class="menu-item ">
-              <a href="/publications/">Publications</a>
-            </li>
-
-            <li class="menu-item ">
-              <a href="/about/">About</a>
-            </li>
-
-          </ul><!-- .menu -->
-
-
-        </div><!-- .site-nav-inside -->
-      </div><!-- .site-nav-wrap -->
-    </nav><!-- .site-navigation -->
-
-    </div><!-- .site-header-inside -->
-  </div><!-- .site-header-wrap -->
-</header><!-- .site-header -->
+{% endif %}

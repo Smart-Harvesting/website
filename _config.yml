@@ -1,42 +1,64 @@
+# Site settings
 title: Smart Harvesting II
-baseurl: /
-permalink: '/:title/'
+email: ctarwater@chrisanthropic.com
+author: Chrisanthropic
+
+keywords: jekyll, jekyll theme, portfolio theme, artist theme
+description: Witty description here.
+
+# Only use this if you are serving your site via Github Pages
+github:
+  baseurl: "starving-artist-jekyll-theme-master"
+  #url: "https://chrisanthropic.github.io/starving-artist-jekyll-theme"
+
+header: images/logo.png
+
+# Formspree contact Form
+contact_form: "https://formspree.io/ctarwater@chrisanthropic.com"
+
+
+# Exclude our ruby stuff
+exclude: [.bundle, .vendor, .bin, starving-artist.gemspec, bin, vendor, Gemfile, Gemfile.lock, Rakefile, s3_website.yml, starving-artist-jekyll-theme-*.gem]
+
+
+# Build settings
+markdown: kramdown
+kramdown:
+  input: GFM
+
+theme: starving-artist-jekyll-theme
+
+# Plugins
+gems:
+  - jekyll-feed
+
+feed:
+  path: atom.xml
+
+# Compress our Css
+#sass:
+#    style: :compressed
+
+include: ['_pages']
+
+permalink: /blog/:year/:title
+
 collections:
-  posts:
-    permalink: '/posts/:title/'
-layout_style: overflow
-palette: blue
-header:
-  title: Smart Harvesting II
-  #tagline: Header Tagline
-  profile_img:
-  #profile_img: images/avatar.png
-  bg: dark
-  has_nav: true
-  has_social: false
-footer:
-  content: '&copy; Stackbit-Fresh. All rights reserved.'
-  #links:
-  #  - text: Made with Stackbit
-  #    url: 'https://www.stackbit.com'
-  #    new_window: true
-sass:
-  indentWidth: 4
-  style: nested
-  precision: 10
-plugins:
-  #- jekyll-menus
-exclude:
-  - Gemfile
-  - Gemfile.lock
-  - node_modules
-  - vendor/bundle/
-  - vendor/cache/
-  - vendor/gems/
-  - vendor/ruby/
-  - ssg-build.sh
-  - LICENSE.md
-  - README.md
-  - netlify.toml
-  - stackbit-build.sh
-  - stackbit-pull.js
+  - galleries
+
+#### SEO Stuff
+# Google Analytics
+google_universal_analytics:
+google_universal_analytics_cookiedomain: auto
+
+# Facebook Opengraph
+facebook_user:
+facebook_app_id:                                #enter your App ID
+facebook_locale: en_US
+facebook_page:                                  #the URL of your Facebook Page
+facebook_image: images/author.jpg                      #enter a default image (at least 200x200px) to use here for posts/pages that don't have one.
+
+# Twitter Cards
+twitter_user:
+twitter_card: true
+twitter_image: images/author.jpg                       #enter a default image (at least 200x200px) to use here for posts/pages that don't have one.

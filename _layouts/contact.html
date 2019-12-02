@@ -1,46 +1,31 @@
 ---
-layout: body
+layout: default
 ---
-
-<article class="post page post-full">
-  <header class="post-header">
-    <h1 class="post-title underline">{{ page.title }}</h1>
-  </header><!-- .post-header -->
-  {% assign subtitle_is_not_empty = page.subtitle | is_not_empty %}
-  {% if subtitle_is_not_empty %}
-  <div class="post-subtitle">
-    {{ page.subtitle }}
-  </div><!-- .post-subtitle -->
-  {% endif %}
-  {% assign img_path_is_not_empty = page.img_path | is_not_empty %}
-  {% if img_path_is_not_empty %}
-  <div class="post-thumbnail">
-    <img src="{{ page.img_path | relative_url }}" alt="{{ page.title }}" />
-  </div><!-- .post-thumbnail -->
-  {% endif %}
-  <div class="post-content">
-    {{ content }}
-    <form name="contactForm" method="POST" netlify-honeypot="bot-field" data-netlify="true" id="contact-form"
-      class="contact-form">
-      <p class="screen-reader-text">
-        <label>Don't fill this out if you're human: <input name="bot-field" /></label>
-      </p>
-      <p class="form-row">
-        <label class="form-label">Name *</label>
-        <input type="text" name="name" placeholder="Your name..." class="form-input">
-      </p>
-      <p class="form-row">
-        <label class="form-label">Email *</label>
-        <input type="email" name="email" placeholder="Your email address..." class="form-input">
-      </p>
-      <p class="form-row">
-        <label class="form-label">Message *</label>
-        <textarea name="message" placeholder="Your message..." class="form-textarea" rows="7"></textarea>
-      </p>
-      <input type="hidden" name="form-name" value="contactForm" />
-      <p class="form-row">
-        <button type="submit" class="button">Send Message</button>
-      </p>
-    </form><!-- .contact-form -->
-  </div><!-- .post-content -->
-</article><!-- .post -->
+<div class="contact_container wraptainer">
+  <div class="small-12 columns">
+  <h1 class="entry-title medium-offset-1">Contact</h1>
+    <form action="{% if page.contact_form != null %}{{ page.contact_form }}{% else %}{{ site.contact_form }}{% endif %}" method="POST">
+      <div class="small-12 medium-offset-1 medium-4 columns">
+        <label for="name">Name</label>
+        <input type="text" name="name" placeholder="Your name" required="">
+      </div>
+      <div class="small-12 medium-offset-1 medium-4 columns">
+        <label for="_replyto">Email</label>
+        <input type="email" name="_replyto" placeholder="Your email" required=""/>
+      </div>
+      <div class="small-12 medium-offset-1 medium-4 columns">
+        <label for="_subject">Subject</label>
+        <input type="text" name="_subject" placeholder="Subject" required=""/>
+      </div>
+      <div class="small-12 medium-offset-1 medium-8 columns">
+        <label for="message">Message</label>
+        <textarea name="message" placeholder="Your Message" required=""></textarea>
+      </div>
+      <div class="small-12 medium-offset-1 medium-4 columns">
+        <input type="submit" value="Send Email" class="button">
+        <input type="hidden" name="_next" value="{{ site.github.url }}/contact/thanks/" />
+        <input type="text" name="_gotcha" style="display:none" />
+      </div>
+    </form>
+  </div>
+</div>

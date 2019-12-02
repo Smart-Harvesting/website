@@ -1,29 +1,25 @@
 ---
-layout: body
+layout: default
 ---
-<h1 class="post-title underline">{{ page.title }}</h1>
-  <div class="post-feed">
-    {% assign display_posts = '/posts' | get_pages | sort: 'date' | reverse %}
-    {% for post in display_posts %}
-    <article class="post">
-      <div class="post-inside">
-        {% assign thumb_img_path_is_not_empty = post.thumb_img_path | is_not_empty %}
-        {% if thumb_img_path_is_not_empty %}
-        <a class="post-thumbnail" href="{{ post.url | relative_url }}">
-          <img class="thumbnail" src="{{ post.thumb_img_path | relative_url }}" alt="{{ post.title }}" />
-        </a>
+<div class="small-12 columns wraptainer">
+{% for post in site.posts %}
+<div class="roll page-content">
+        <header>
+                <span class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</span>
+                <h2>
+                    <a class="post-link" href="{{ site.github.url }}/{{ post.url }}">{{ post.title }}</a>
+                </h2>
+        </header>
+        <article>
+        {% if post.thumbnail %}
+            <a href="{{ site.url }}{{ post.url }}">
+                <figure>
+                    <img src="{{ site.github.url }}/{{ post.thumbnail }}" class="thumb" width="150px" height="150px" />
+                </figure>
+            </a>
         {% endif %}
-        <header class="post-header">
-          <h2 class="post-title"><a href="{{ post.url | relative_url }}" rel="bookmark">{{ post.title }}</a></h2>
-        </header><!-- .post-header -->
-        <div class="post-content">
-          <p>{{ post.excerpt }}</p>
-        </div>
-        <footer class="post-meta">
-          <time class="published"
-            datetime="{{ post.date | date: '%Y-%m-%d %H:%M' }}">{{ post.date | date: '%B %d, %Y' }}</time>
-        </footer>
-      </div><!-- .post-inside -->
-    </article><!-- .post -->
-    {% endfor %}
-  </div><!-- .post-feed -->
+                <p>{{ post.excerpt }}  <a href="{{ site.github.url }}/{{ post.url }}">Read More</a></p>
+        </article>
+</div>
+{% endfor %}
+</div>
