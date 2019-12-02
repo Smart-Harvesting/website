@@ -1,12 +1,11 @@
 source "https://rubygems.org"
-#gemspec
-gem 'jekyll'                    #Needed since this is a theme for Jekyll
-gem 'jekyll-feed'
-gem 'rake'                      #Used to simplify building/deploying tasks
-gem 's3_website'                #Used to deploy site to AWS S3
-gem 'mini_magick'               #Used by a raketask to compress/optimize images at build time
-gem 'sass'                      
-gem 'image_optim'               #Optimizes our images
-gem 'image_optim_pack'          #Tools that image_optim uses
-gem 'starving-artist-jekyll-theme'
-#gem 'starving-artist-jekyll-theme', :path => ""        # For Testing local Gems
+
+git_source(:github) {|repo_name| "https://github.com/#{repo_name}" }
+
+gem "jekyll", "~> 3.8.4"
+
+group :jekyll_plugins do
+    gem "jekyll-menus", "~> 0.6.0"
+    gem "jekyll-paginate-v2", "~> 1.9"
+    gem "jekyll-paginate", "~> 1.1"
+end
