@@ -9,13 +9,12 @@ palette: blue
 header:
   title: Smart Harvesting II
   #tagline: Header Tagline
-  profile_img:
-  #profile_img: images/avatar.png
+  profile_img: #images/avatar.png
   bg: dark
   has_nav: true
   has_social: false
 footer:
-  content: '&copy; Stackbit-Fresh. All rights reserved.'
+  content: '&copy; IR-Group, TH Köln. All rights reserved.'
   #links:
   #  - text: Made with Stackbit
   #    url: 'https://www.stackbit.com'
@@ -36,9 +35,6 @@ exclude:
   - vendor/cache/
   - vendor/gems/
   - vendor/ruby/
-  - ssg-build.sh
   - LICENSE.md
+  - LICENSE
   - README.md
-  - netlify.toml
-  - stackbit-build.sh
-  - stackbit-pull.js
