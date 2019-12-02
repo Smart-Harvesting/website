@@ -24,6 +24,8 @@ sass:
   indentWidth: 4
   style: nested
   precision: 10
+#Build
+destination: docs
 plugins:
   - jekyll-menus
 exclude:

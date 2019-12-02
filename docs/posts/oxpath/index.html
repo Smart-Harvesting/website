@@ -1,0 +1,446 @@
+<!doctype html>
+<html>
+    <head>    
+        
+        <title>OXPath for Web Scraping - Smart Harvesting II</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="google" content="notranslate" />
+        <link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,700,700i" rel="stylesheet">
+        <link rel="stylesheet" href="/smart-harvesting2/assets/css/main.css">
+        
+    </head>
+    <body>
+        
+        <div id="page" class="site style-overflow palette-blue">
+  <header id="masthead" class="site-header dark">
+  <div class="site-header-wrap">
+    <div class="site-header-inside">
+      <div class="site-branding">
+        
+        
+        <div class="site-identity">
+          
+          <p class="site-title"><a href='/smart-harvesting2/'>Smart Harvesting II</a></p>
+          
+          
+          
+        </div><!-- .site-identity -->
+        
+        <button id="menu-toggle" class="menu-toggle"><span class="screen-reader-text">Menu</span><span class="icon-menu"
+            aria-hidden="true"></span></button>
+        
+      </div><!-- .site-branding -->
+      
+      <nav id="main-navigation" class="site-navigation" aria-label="Main Navigation">
+        <div class="site-nav-wrap">
+          <div class="site-nav-inside">
+            <ul class="menu">
+              
+              <li class="menu-item ">
+                <a href="/smart-harvesting2/">Home</a>
+              </li>
+              
+              <li class="menu-item ">
+                <a href="/smart-harvesting2/people/">People</a>
+              </li>
+              
+              <li class="menu-item ">
+                <a href="/smart-harvesting2/code/">Code</a>
+              </li>
+              
+              <li class="menu-item ">
+                <a href="/smart-harvesting2/blog/">Blog</a>
+              </li>
+              
+              <li class="menu-item ">
+                <a href="/smart-harvesting2/publications/">Publications</a>
+              </li>
+              
+              <li class="menu-item ">
+                <a href="/smart-harvesting2/about/">About</a>
+              </li>
+              
+            </ul><!-- .menu -->
+            
+            
+          </div><!-- .site-nav-inside -->
+        </div><!-- .site-nav-wrap -->
+      </nav><!-- .site-navigation -->
+      
+    </div><!-- .site-header-inside -->
+  </div><!-- .site-header-wrap -->
+</header><!-- .site-header -->
+
+  <div id="content" class="site-content">
+    <div class="inner">
+      <main id="main" class="site-main">
+          <article class="post post-full">
+    <header class="post-header">
+      <h1 class="post-title underline">OXPath for Web Scraping</h1>
+    </header><!-- .post-header -->
+    
+    
+    
+    
+    <div class="post-content">
+      <p>In our <a href="/smart-harvesting2posts/web-scraping/index.html">previous blog post</a>, we discussed the different options for programmers to create web scrapers in several programming languages.
+This approach to web scraping is fine for people with a proficient background in programming.
+Unfortunately, there are far more people who need to extract data from the web, that don’t have the necessary programming skills.</p>
+
+<!--more-->
+
+<p>In our project “<a href="/smart-harvesting2about/index">Smart Harvesting II</a>”, our use case was metadata collection for (digital) libraries.
+We found that there are a lot of cases where bibliographic metadata, that librarians wanted to collect and add to their collections, was not available in machine-readable form, e.g. via APIs or data deliveries.
+In consequence, librarians and curators often resort to either collecting the data manually via copy&amp;paste, or don’t include the data at all.
+This is where we thought “Smart Harvesting” could fit in - we wanted to find smart ways to collect bibliographic metadata from the web, with semi-automatic means but without the need to program a full-fledged web scraper.</p>
+
+<p>This is where <a href="https://oxpath.org">OXPath</a> comes into play.</p>
+
+<h1 id="what-is-oxpath">What is OXPath?</h1>
+
+<p>OXPath is both a domain-specific language (DSL) as well as a tool for web scraping.
+It uses <a href="">Selenium</a> under the hood for browser automation, and the descriptive OXPath language at the surface to control the browser and the extraction process in a declarative way.</p>
+
+<p>In the following, we will give a quick introduction to the OXPath language as well as the tool.
+An extensive tutorial on OXPath can be found on <a href="https://arxiv.org/abs/1806.10899">arXiv</a>.</p>
+
+<h2 id="the-oxpath-language">The OXPath Language</h2>
+
+<p>The name might hint the reader already at the fact that OXPath is based on the very popular XML query language <em>XPath</em>.
+In fact, it is a mere extension of XPath which adds the following characteristics:</p>
+
+<ul>
+  <li>web page rendering</li>
+  <li>actions to interact with the rendered web page</li>
+  <li>extraction markers to select data to be extracted, and</li>
+  <li>Kleene star to navigate through a set of pages.</li>
+</ul>
+
+<p>In the following step by step example, we will create an OXPath script that extracts from the list of journals listed in dblp the title of the page, as well as for each journal the journal title and URL.</p>
+
+<p>Every OXPath script starts with a <code class="highlighter-rouge">doc</code> function call whose parameter is the URL of the web page to render.
+Optionally, an additional parameter can be specifiy to instruct the script to <code class="highlighter-rouge">wait</code> a specific amount of time before interacting with the page.
+This is needed in cases where the loading of all desired content takes up some time.</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>doc("https://dblp.org/db/journals/", [wait=60])
+</code></pre></div></div>
+
+<p>Following the <code class="highlighter-rouge">doc</code> function call, the remaining part of an OXPath script is made up of XPath expressions to navigate the DOM tree, interwoven with extraction markers to extract desired data at specific locations.
+An extraction marker looks like this: <code class="highlighter-rouge">:&lt;name&gt;</code> or <code class="highlighter-rouge">:&lt;name=value-exp&gt;</code>.
+The former notation results in an empty node in the output, which might be used as a parent node to group related child nodes.
+The latter results in the return value of <code class="highlighter-rouge">value-exp</code> being the content of the extracted node.
+In this case, <code class="highlighter-rouge">value-exp</code> can be a constant, or the return value of an XPath or OXPath function.
+OXPath implements standard functions of XPath and adds some additional ones, e.g. to access node content or manipulate strings prior to extraction.</p>
+
+<p>Continuing with our example, after rendering the target web page, we can address the header element of the page and extract the text from within the <code class="highlighter-rouge">h1</code> tag into an extraction node called “title” like this:</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>doc("https://dblp.org/db/journals/")
+    //header[@class~="headline"]:<span class="nt">&lt;title</span><span class="err">=string(./h1)</span><span class="nt">&gt;</span>
+</code></pre></div></div>
+
+<p>Furthermore, we want to extract a list of journals, and for each journal listed, the journal title and the url.
+We will need nested output nodes for that to bundle up names and urls belonging together.
+The envisioned output structure should look like this:</p>
+
+<p><img src="/smart-harvesting2images/extractionTree.png" alt="output structure" /></p>
+
+<p>To this end, we insert another extraction marker which is empty, as it will contain child nodes:</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>doc("https://dblp.org/db/journals/")
+    //header[@class~="headline"]:<span class="nt">&lt;title</span><span class="err">=string(./h1)</span><span class="nt">&gt;</span>
+    :<span class="nt">&lt;journals&gt;</span>
+</code></pre></div></div>
+
+<p>To create the parent-child relationships, all following expressions will now be an attribute to the <code class="highlighter-rouge">journals</code> extraction marker, indicated by <code class="highlighter-rouge">[]</code>:</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>doc("https://dblp.org/db/journals/")
+    //header[@class~="headline"]:<span class="nt">&lt;title</span><span class="err">=string(./h1)</span><span class="nt">&gt;</span>
+    :<span class="nt">&lt;journals&gt;</span>
+        [
+        ]
+</code></pre></div></div>
+
+<p>Next, we need to navigate the page tree again, to find the titles of individual journals.
+Via inspection, we find that the journals are all listed inside a <code class="highlighter-rouge">div</code> tag which is a sibling of the <code class="highlighter-rouge">header</code> tag that we have addressed so far.
+Thus, we need to navigate the tree one up and locate the <code class="highlighter-rouge">div</code> tag by its class:</p>
+
+<p><code class="highlighter-rouge">./..//div[@class="hide-body"]</code></p>
+
+<p>Each individual journal can be found in an <code class="highlighter-rouge">a</code> tag, thus we add another empty extraction marker there:</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>doc("https://dblp.org/db/journals/")
+    //header[@class~="headline"]:<span class="nt">&lt;title</span><span class="err">=string(./h1)</span><span class="nt">&gt;</span>
+    :<span class="nt">&lt;journals&gt;</span>
+        [
+            ./..//div[@class="hide-body"]//a:<span class="nt">&lt;journal&gt;</span>
+        ]
+</code></pre></div></div>
+
+<p>In fact, this very <code class="highlighter-rouge">a</code> tag already contains all desired information - the journal’s name is the tag’s text, the url is found in the <code class="highlighter-rouge">href</code> attribute.
+Therefore, we can add both extraction markers in one step at the current location, again as attribute to the <code class="highlighter-rouge">journal</code> node:</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>doc("https://dblp.org/db/journals/")
+    //header[@class~="headline"]:<span class="nt">&lt;title</span><span class="err">=string(./h1)</span><span class="nt">&gt;</span>
+    :<span class="nt">&lt;journals&gt;</span>
+        [
+            ./..//div[@class="hide-body"]//a:<span class="nt">&lt;journal&gt;</span>
+            [
+                .:<span class="nt">&lt;name</span><span class="err">=string(.)</span><span class="nt">&gt;</span>  
+                 :<span class="nt">&lt;url</span><span class="err">=string(@href)</span><span class="nt">&gt;</span>
+            ]
+        ]
+</code></pre></div></div>
+
+<p>The script so far only extracts journals listed on the given page.
+The complete list of journals, though, can be accessed by continously clicking on the “next 100 entries” link on top of the list.
+This is a common case for the application of the Kleene star.</p>
+
+<p>First, we identify the link relative to the extracted title:</p>
+
+<p><code class="highlighter-rouge">./..//div[@id="browse-journals-output"]/p[1]/a[contains(., 'next 100')]</code></p>
+
+<p>This is the path we need to repeatedly perform the <code class="highlighter-rouge">click</code> action upon.<br />
+Since we cannot know beforhand, how many clicks we will need to get to the end of the list, we need the <em>unbounded</em> Kleene star <code class="highlighter-rouge">(...)*</code>.<br />
+We then need another stopping condition. Via inspection, we can see that at the last page, the <code class="highlighter-rouge">a</code> tag changes and receives a <code class="highlighter-rouge">class</code> attribute of <code class="highlighter-rouge">disabled</code>. We employ this knowledge into a combined predicate:</p>
+
+<p><code class="highlighter-rouge">(./..//div[@id="browse-journals-output"]/p[1]/a[contains(., 'next 100') and string(@class) != "disabled"]/{click /})*</code></p>
+
+<p>Here’s how we include this expression in our script. You can see that this requires only a minor modification, since the path expression following the Kleene star will now no longer relate to the path for the title extraction:</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>doc("https://dblp.org/db/journals/")
+    //header[@class~="headline"]:<span class="nt">&lt;title</span><span class="err">=string(./h1)</span><span class="nt">&gt;</span>
+    :<span class="nt">&lt;journals&gt;</span>
+    /(./..//div[@id="browse-journals-output"]/p[1]/a[contains(., "next 100") and string(@class) != "disabled"]/{click /})*
+    /.
+        [        
+            //div[@class="hide-body"]//a:<span class="nt">&lt;journal&gt;</span>
+            [
+                .:<span class="nt">&lt;name</span><span class="err">=string(.)</span><span class="nt">&gt;</span>  
+                 :<span class="nt">&lt;url</span><span class="err">=string(@href)</span><span class="nt">&gt;</span>
+            ]
+        ]
+</code></pre></div></div>
+
+<p>This is what the extracted data looks in XML serialization:</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;results&gt;</span>
+    <span class="nt">&lt;title&gt;</span>Computer Science Journals<span class="nt">&lt;/title&gt;</span>
+    <span class="nt">&lt;journals&gt;</span>
+        <span class="nt">&lt;journal&gt;</span>
+            <span class="nt">&lt;name&gt;</span>3-D Information Modeling; International Journal of ...(IJ3DIM)<span class="nt">&lt;/name&gt;</span>
+            <span class="nt">&lt;url&gt;</span>http://dblp.dagstuhl.de/db/journals/ij3dim<span class="nt">&lt;/url&gt;</span>
+        <span class="nt">&lt;/journal&gt;</span>
+        <span class="nt">&lt;journal&gt;</span>
+            <span class="nt">&lt;name&gt;</span>4OR: Quarterly Journal of the Belgian, French and Italian Operations Research Societies<span class="nt">&lt;/name&gt;</span>
+            <span class="nt">&lt;url&gt;</span>http://dblp.dagstuhl.de/db/journals/4or<span class="nt">&lt;/url&gt;</span>
+        <span class="nt">&lt;/journal&gt;</span>
+        ...
+        <span class="nt">&lt;journal&gt;</span>
+            <span class="nt">&lt;name&gt;</span>ZOR - Methods and Models of Operations Research<span class="nt">&lt;/name&gt;</span>
+            <span class="nt">&lt;url&gt;</span>https://dblp.org/db/journals/mmor/<span class="nt">&lt;/url&gt;</span>
+        <span class="nt">&lt;/journal&gt;</span>
+    <span class="nt">&lt;/journals&gt;</span>
+<span class="nt">&lt;/results&gt;</span>
+</code></pre></div></div>
+
+<p>Here’s another OXPath script that allows you to extract all publication from an author’s page in dblp:</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>doc("https://dblp.org/pers/hd/n/Neumann:Mandy")
+   //ul[@class="publ-list"]/li[@class~="entry"]
+    /article[@class="data"]:<span class="nt">&lt;record&gt;</span>
+       [./span[@itemprop="author"]:<span class="nt">&lt;author</span><span class="err">=normalize-space(.)</span><span class="nt">&gt;</span>]
+       [./span[@itemprop="name"]:<span class="nt">&lt;title</span><span class="err">=normalize-space(.)</span><span class="nt">&gt;</span>]
+       [?.//span[@itemprop="isPartOf"][1]
+         :<span class="nt">&lt;source</span><span class="err">=normalize-space(.)</span><span class="nt">&gt;</span>]
+       [?./span[@itemprop="pagination"]:<span class="nt">&lt;pages</span><span class="err">=normalize-space(.)</span><span class="nt">&gt;</span>]
+</code></pre></div></div>
+
+<p>In this example, you can see the special notation <code class="highlighter-rouge">[? ... ]</code> which is used for <em>optional</em> attributes.
+This way, attributes can be specified that might be present or not.</p>
+
+<p>As a final example, here is a complete OXPath expression to harvest metadata of working papers from the Bonn International Center for Conversion (BICC) website:</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>doc("https://www.bicc.de/publications/by-category/all-issues/category/working-paper/")
+    //div[@class="search-publication-results"]
+        [./div[@class="search-publication-single"]:<span class="nt">&lt;item&gt;</span>
+            //p/a/{click/}
+                //div[@class="tx-bicctools-pi3"]
+                    [? ./h1:<span class="nt">&lt;title</span><span class="err">=string(.)</span><span class="nt">&gt;</span>]
+                    [? ./h1:<span class="nt">&lt;publisher</span><span class="err">="bicc</span> <span class="err">-</span> <span class="err">Bonn</span> <span class="err">International</span> <span class="err">Center</span> <span class="err">for</span> <span class="err">Conversion"</span><span class="nt">&gt;</span>]
+                    [? ./h1:<span class="nt">&lt;doctype</span><span class="err">="working</span> <span class="err">paper"</span><span class="nt">&gt;</span>]
+                    [? ./div[@class="publicationfield cover-field"]/img
+                        :<span class="nt">&lt;number</span><span class="err">=substring-before(substring-after(@title,</span> <span class="err">'WP_'),'.jpg')</span><span class="nt">&gt;</span>]
+                    [? ./div[@class="publicationfield date_from"]
+                        :<span class="nt">&lt;date_from</span><span class="err">=translate(normalize-space(substring-after(.,'Release</span> <span class="err">date:</span> <span class="err">')),'-','/')</span><span class="nt">&gt;</span>]
+                    [? ./div[@class="publicationfield abstract-field"]
+                        :<span class="nt">&lt;abstract</span><span class="err">=normalize-space(.)</span><span class="nt">&gt;</span>]
+                    [? ./div[1]/ul/li/a:<span class="nt">&lt;url</span><span class="err">=concat('https://www.bicc.de/',</span> <span class="err">@href)</span><span class="nt">&gt;</span>]
+                    [? ./div[1]/ul/li/a:<span class="nt">&lt;lang</span><span class="err">=string(.)</span><span class="nt">&gt;</span>]
+                    [? ./div[2]/ul/li/a:<span class="nt">&lt;author</span><span class="err">=string(replace(.,'PD</span> <span class="err">Dr.</span> <span class="err">|Prof.</span> <span class="err">|Dr.</span> <span class="err">',''))</span><span class="nt">&gt;</span>]
+                    [? ./div[3]/ul/li/a:<span class="nt">&lt;topic</span><span class="err">=string(.)</span><span class="nt">&gt;</span>]
+                    [? ./div[4]/ul/li/a:<span class="nt">&lt;geoContext</span><span class="err">=string(.)</span><span class="nt">&gt;</span>]
+		]
+</code></pre></div></div>
+
+<p>In this script, for each publication item on the result list, a link is clicked that leads to a detail page where all the interesting metadata can be collected. Notice the use of optional attributes to prevent exceptions when some metadata field is missing for an item. Also, this real-world example shows the usage of some of the functions that can be used to normalize or alter data prior to storing it in the output, e.g. <code class="highlighter-rouge">normalize-space()</code> for removing spurious white space, or <code class="highlighter-rouge">concat()</code> and <code class="highlighter-rouge">replace()</code> to concatenate strings and replace specific substrings, respectively.</p>
+
+<p>For a more thorough discussion of the syntax of OXPath and other useful constructs and functions, please refer to the tutorial on <a href="https://arxiv.org/abs/1806.10899">arXiv</a>.</p>
+
+<h2 id="the-oxpath-tool">The OXPath Tool</h2>
+
+<p>OXPath can be used both standalone, or integrated into a bigger application.</p>
+
+<p>For standalone usage, the OXPath CLI (command-line interface) can be run like any standalone Java application:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>java <span class="nt">-jar</span> oxpath-cli.jar
+</code></pre></div></div>
+
+<p>Running the command above in a terminal prints the help information on the tool with all available command line options.
+The most important option is the path to the OXPath script to be executed.
+A command might look like this:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>java <span class="nt">-jar</span> oxpath-cli.jar <span class="nt">-q</span> path/to/script.oxp
+</code></pre></div></div>
+
+<p>Running this command will execute the script at the provided path, fire up a web browser (the first execution of OXPath will install a specific version of Firefox in the user’s home directory), perform the extraction and print the result in XML format to the console.
+Alternate output formats can be specified via command-line options.
+Also, the <code class="highlighter-rouge">xvfb</code> option (together with the specification of a virtual display) allows Firefox to run in xvfb mode, that is, headless in a virtual frame, thus not visible to the user.
+Xvfb must be installed in the system.</p>
+
+<p>OXPath can also be integrated into your Java application, for example.
+To do this, you first need to add OXPath as a dependency.
+Then, you can programmatically instantiate the web browser like this:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">final</span> <span class="nc">WebBrowser</span> <span class="n">browser</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">WebBrowserBuilder</span><span class="o">().</span><span class="na">build</span><span class="o">();</span>
+</code></pre></div></div>
+
+<p>With the help of WebBrowserBuilder, the browser can be customized.
+For example, you might disable Javascript, or specific content types like images.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">WebBrowserBuilder</span> <span class="n">browserBuilder</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">WebBrowserBuilder</span><span class="o">();</span>
+<span class="n">browserBuilder</span><span class="o">.</span><span class="na">getRunConfiguration</span><span class="o">()</span>
+                <span class="o">.</span><span class="na">setDisabledContentTypes</span><span class="o">(</span><span class="nc">WebBrowser</span><span class="o">.</span><span class="na">ContentType</span><span class="o">.</span><span class="na">IMAGE</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">setEnablePlugins</span><span class="o">(</span><span class="kc">false</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">setXvfbMode</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+<span class="kd">final</span> <span class="nc">WebBrowser</span> <span class="n">browser</span> <span class="o">=</span> <span class="n">browserBuilder</span><span class="o">.</span><span class="na">build</span><span class="o">();</span>
+</code></pre></div></div>
+
+<p>After setting up the browser,you can fire up the OXPath engine.
+It will evaluate the given script by running it in the browser, and writes the output to the provided output handler.
+OXPath comes with a number of output handlers, for example serializing output in XML, JSON or hierarchical CSV format.
+You can also implement your own custom output handler that fits your use case.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">String</span> <span class="n">oxpathScriptString</span> <span class="o">=</span> <span class="o">...;</span>
+<span class="kd">final</span> <span class="nc">XMLOutputHandler</span> <span class="n">outputHandler</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">XMLOutputHandler</span><span class="o">(</span><span class="kc">true</span><span class="o">,</span> <span class="kc">false</span><span class="o">,</span> <span class="kc">false</span><span class="o">);</span>
+<span class="nc">OXPath</span><span class="o">.</span><span class="na">ENGINE</span><span class="o">.</span><span class="na">evaluate</span><span class="o">(</span><span class="n">oxpathScriptString</span><span class="o">,</span> <span class="n">browser</span><span class="o">,</span> <span class="n">outputHandler</span><span class="o">);</span>
+<span class="nc">String</span> <span class="n">xmlResult</span> <span class="o">=</span> <span class="n">outputHandler</span><span class="o">.</span><span class="na">asString</span><span class="o">();</span>
+</code></pre></div></div>
+
+<h1 id="how-is-oxpath-used-in-smart-harvesting-ii">How is OXPath used in Smart Harvesting II?</h1>
+
+<p>Our main motivation for proposing the project “Smart Harvesting” was the fact that bibliographic metadata is not always easy to acquire.
+Our partner <a href="https://dblp.org">dblp</a> provided us with a very common use case.
+For them, bibliographic metadata comes from a lot of sources, which include OAI-PMH endpoints, FTP servers or deliveries via email.
+But there are also some publishers that provide neither form of delivery, such that the only source for bibliographic information are the publishers’ websites.</p>
+
+<p>Prior to “Smart Harvesting”, dblp relied on web scrapers that have been manually programmed in Java and with a lot of regular expressions.
+But they quickly found that maintaining these wrappers is labour-intensive and time-consuming.
+Regulae expressions can be extremely fragile, as the slightest change in the web page’s HTML could break the whole scraper.
+There’s also the drawback that onyl a skilled programmer is able to create new wrappers or update existing ones.
+To be prepared for the future, we figured it would be better to use some approach that can also be operated and maintained by curators without a strong programming background.
+Such an approach would then be interesting not only for dblp, but also for other players in the field with similar problems.</p>
+
+<p>To test this approach, dblp has gradually replaced most of their previously Java-based wrappers with OXPath scripts.
+Using OXPath also has the advantage that it can be seamlessly integrated into the existing Java codebase for the dblp data workflow.</p>
+
+<p>Our other project partner, the <a href="https://www.gesis.org/en/home">GESIS - Leibniz Institute for the Social Sciences</a>, faces similar issues to dblp when collecting new content for their open access repository <a href="https://www.ssoar.info/ssoar/">SSOAR</a>.
+They also have to resort to manual copy&amp;paste if no API or data delivery from a publisher is available.
+We decided to provide an OXPath-based module to their <a href="https://git.gesis.org/dda/dda-wizard">Document Deposit Assistant</a> to provide users with the option to harvest bibliographic metadata from e.g. journal websites via OXPath.</p>
+
+<h2 id="issues">Issues</h2>
+
+<p>We have to admit that OXPath is not the solution to all web scraping problems out there.
+First of all, the current version only runs on Linux which might be a major drawback for a lot of potential users.
+The upcoming version will also support MacOS X, but a support for Windows is only on the far horizon.
+We tried to mitigate this drawback in the course of our project by providing a <a href="https://github.com/irgroup/oxpath_docker">Docker container for OXPath</a> that can be run on all operating systems.</p>
+
+<p>Another issue with OXPath is the learning curve, which is steeper than we expected for non-technical people.
+We still believe that OXPath could be used by non-programmers, but you need to invest some time upfront to really get a feeling for the structure of the language.</p>
+
+<p>Finally, OXPath is currently not open source, which might prevent its application in certain project scopes where the use of open source software is a strong requirement.
+In today’s times where <a href="https://www.fosteropenscience.eu/content/what-open-science-introduction">open science</a> has become a strong movement, we would appreciate a tool like OXPath that is really useful for research projects to also open up.</p>
+
+<h1 id="conclusions">Conclusions</h1>
+
+<p>In this post, we have introduced the web scraping tool and language OXPath.
+We have introduced the main concepts and structures of the language by giving a step by step example for a script to harvest publication data from dblp.</p>
+
+<p>We have also explained how OXPath has been sucessfully implemented in workflows at dblp and GESIS during the course of the “Smart Harvesting II” project.</p>
+
+<p>In the next post, we will further discuss more options to perform web scraping by the layman.</p>
+
+    </div><!-- .post-content -->
+    <footer class="post-meta">
+      <time class="published"
+        datetime="2019-11-21 00:00">Thursday, November 21, 2019</time>
+    </footer><!-- .post-meta -->
+  </article><!-- .post -->
+
+  <!-- Next/previous post navigation TBD -->
+  <!--
+  <nav class="block read-next">
+    <h2 class="block-title underline">Read Next</h2>
+    <div class="post-feed">
+      <article class="post">
+        <div class="post-inside">
+          <a class="post-thumbnail" href="#"><img src="#" alt="" /></a>
+          <header class="post-header">
+            <h3 class="post-title"><a href="#" rel="bookmark">Previous Post Title</a></h3>
+          </header>
+          <div class="post-content">
+            <p>Previous post excerpt...</p>
+          </div>
+          <footer class="post-meta">
+            <time class="published" datetime="">Previous post date</time>
+          </footer>
+        </div>
+      </article>
+      <article class="post">
+        <div class="post-inside">
+          <a class="post-thumbnail" href="#"><img src="#" alt="" /></a>
+          <header class="post-header">
+            <h3 class="post-title"><a href="#" rel="bookmark">Next Post Title</a></h3>
+          </header>
+          <div class="post-content">
+            <p>Next post excerpt...</p>
+          </div>
+          <footer class="post-meta">
+            <time class="published" datetime="">Next post date</time>
+          </footer>
+        </div>
+      </article>
+    </div>
+  </nav>
+  -->
+
+      </main><!-- .site-main -->
+      <footer id="colophon" class="site-footer">
+  <p class="site-info">
+    &copy; Stackbit-Fresh. All rights reserved.
+    &nbsp;
+    
+  </p><!-- .site-info -->
+  <a id="to-top" class="to-top" href="#page"><span class="icon-arrow-up" aria-hidden="true"></span><span
+      class="screen-reader-text">Back to top</span></a>
+</footer><!-- .site-footer -->
+
+    </div><!-- .inner -->
+  </div><!-- .site-content -->
+</div><!-- .site -->
+
+        <!-- Scripts -->
+        <script src="/smart-harvesting2/assets/js/plugins.js"></script>
+        <script src="/smart-harvesting2/assets/js/main.js"></script>
+    </body> 
+</html>

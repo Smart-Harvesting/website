@@ -1,0 +1,405 @@
+<!doctype html>
+<html>
+    <head>    
+        
+        <title>Web Scraping - Smart Harvesting II</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="google" content="notranslate" />
+        <link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,700,700i" rel="stylesheet">
+        <link rel="stylesheet" href="/smart-harvesting2/assets/css/main.css">
+        
+    </head>
+    <body>
+        
+        <div id="page" class="site style-overflow palette-blue">
+  <header id="masthead" class="site-header dark">
+  <div class="site-header-wrap">
+    <div class="site-header-inside">
+      <div class="site-branding">
+        
+        
+        <div class="site-identity">
+          
+          <p class="site-title"><a href='/smart-harvesting2/'>Smart Harvesting II</a></p>
+          
+          
+          
+        </div><!-- .site-identity -->
+        
+        <button id="menu-toggle" class="menu-toggle"><span class="screen-reader-text">Menu</span><span class="icon-menu"
+            aria-hidden="true"></span></button>
+        
+      </div><!-- .site-branding -->
+      
+      <nav id="main-navigation" class="site-navigation" aria-label="Main Navigation">
+        <div class="site-nav-wrap">
+          <div class="site-nav-inside">
+            <ul class="menu">
+              
+              <li class="menu-item ">
+                <a href="/smart-harvesting2/">Home</a>
+              </li>
+              
+              <li class="menu-item ">
+                <a href="/smart-harvesting2/people/">People</a>
+              </li>
+              
+              <li class="menu-item ">
+                <a href="/smart-harvesting2/code/">Code</a>
+              </li>
+              
+              <li class="menu-item ">
+                <a href="/smart-harvesting2/blog/">Blog</a>
+              </li>
+              
+              <li class="menu-item ">
+                <a href="/smart-harvesting2/publications/">Publications</a>
+              </li>
+              
+              <li class="menu-item ">
+                <a href="/smart-harvesting2/about/">About</a>
+              </li>
+              
+            </ul><!-- .menu -->
+            
+            
+          </div><!-- .site-nav-inside -->
+        </div><!-- .site-nav-wrap -->
+      </nav><!-- .site-navigation -->
+      
+    </div><!-- .site-header-inside -->
+  </div><!-- .site-header-wrap -->
+</header><!-- .site-header -->
+
+  <div id="content" class="site-content">
+    <div class="inner">
+      <main id="main" class="site-main">
+          <article class="post post-full">
+    <header class="post-header">
+      <h1 class="post-title underline">Web Scraping</h1>
+    </header><!-- .post-header -->
+    
+    
+    
+    
+    <div class="post-content">
+      <p>A main focus of the Smart Harvesting II project was the topic of <em>web scraping</em>.
+In this post, we are going to explain what web scraping - also called <em>web data extraction</em> - really is, and how you would program a software that performs this task.</p>
+
+<h2 id="web-scraping---introduction">Web Scraping - Introduction</h2>
+
+<p>What exactly is web scraping?
+As the name suggests, it is a technique to <em>scrape</em> data from the Web.
+This metaphor hints at the fact that you don’t use any structured form of access like a query to a REST API for that, but rather try to get your data directly from the website as presented on the screen.</p>
+
+<p>The most straightforward form of web scraping is using the method of <em>copy and paste</em>, that is, collecting the content of interest manually.
+Of course, this approach is very labour-intensive and time-consuming.
+Still, it is also the most reliable approach as you can make sure you get all and exactly the data you want to get.</p>
+
+<p>A more sophisticated approach, however, to save you time and labour is the usage of a computer program to perform the data extraction for you.
+How would that work?
+Well, the program still would need to mimic a human, as it wants to make use of the human-directed presentation of data which is a website.
+That is, it would need to reproduce every step a human would do to get the data - navigate to the website, possibly fill out forms, click links and buttons etc., and finally select and copy the desired data.
+All these steps must be mimiced programmatically.
+Even though the construction of a web scraper will take some time upfront, the execution in the end will be much faster than the manual approach, which is why this approach pays off especially in scenarios of continuous and/or repeated data extraction tasks.</p>
+
+<p>Programmers that need to develop a wrapper to scrape data from the web don’t need to do
+this completely from scratch.
+There are a number of libraries and frameworks available for popular programming languages like Python, R, or Java.
+In the following, we will explain how a web scraper can be programmed in these languages.</p>
+
+<h2 id="programming-web-scrapers-in-python">Programming Web Scrapers in Python</h2>
+
+<p>For Python, the best known libraries are perhaps <a href="https://www.crummy.com/software/BeautifulSoup/">BeautifulSoup</a>, <a href="https://scrapy.org/">Scrapy</a> and <a href="https://github.com/scrapy/parsel">parsel</a>.</p>
+
+<p>The following examples will make use of the web scraper testing website http://books.toscrape.com.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">url</span> <span class="o">=</span> <span class="s">"http://books.toscrape.com"</span>
+</code></pre></div></div>
+
+<p>Irrespective of which library you use, in most cases you will have to establish a connection to the start URL first and obtain the HTML text. This can be accomplished by using either of the following methods:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">urllib.request</span> <span class="kn">import</span> <span class="n">urlopen</span>
+
+<span class="n">html</span> <span class="o">=</span> <span class="n">urlopen</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="n">html</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span><span class="o">.</span><span class="n">text</span>
+</code></pre></div></div>
+
+<h3 id="beautifulsoup">BeautifulSoup</h3>
+
+<p>Developed already in 2004, <em><a href="https://www.crummy.com/software/BeautifulSoup/">BeautifulSoup</a></em> is a popular Python library to work with HTML.
+It provides a few simple methods to navigate, search and modify an HTML parse tree.</p>
+
+<p>Parsing a website with BeautifulSoup is as simple as creating a new BeautifulSoup object, instantiated with the html text of the website:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">html</span><span class="p">,</span> <span class="s">'html.parser'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>This object is then used to navigate the HTML tag tree and to select specific nodes.
+For example, we may get all the book titles on the first page like this:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># find all article tags that have a class attribute value of 'product_pod'
+</span><span class="n">bookList</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s">'article'</span><span class="p">,</span> <span class="p">{</span><span class="s">'class'</span><span class="p">:</span><span class="s">'product_pod'</span><span class="p">})</span>
+<span class="k">for</span> <span class="n">book</span> <span class="ow">in</span> <span class="n">bookList</span><span class="p">:</span>
+    <span class="c1"># find the title attribute of each book and extract its value
+</span>    <span class="n">title</span> <span class="o">=</span> <span class="n">book</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="k">lambda</span> <span class="n">tag</span><span class="p">:</span> <span class="s">'title'</span> <span class="ow">in</span> <span class="n">tag</span><span class="o">.</span><span class="n">attrs</span><span class="p">)</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s">'title'</span><span class="p">]</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">'Title: {}'</span><span class="o">.</span><span class="nb">format</span><span class="p">(</span><span class="n">title</span><span class="p">))</span>
+</code></pre></div></div>
+
+<p>Obviously, this approach is best suited for static HTML. To navigate a page, you can extract the URL from @href attributes of <code class="highlighter-rouge">a</code> tags, for example, and use them to create a different request to that page, to receive a new HTML parse tree to work with.</p>
+
+<h3 id="scrapy">Scrapy</h3>
+
+<p>In <em><a href="https://scrapy.org/">Scrapy</a></em>, wrappers are called «web spiders».
+Also, the library goes beyond pure web
+scraping by providing additional means for data extraction via APIs or for general-purpose web crawling.
+Scrapy is suitable for HTML and XML sources and provides support for selecting and extracting data via XPath expressions, CSS selectors or regular expressions.
+An interactive shell helps the programmer in writing and debugging spiders.
+Scrapy also provides a lot of extensions that are helpful dealing with the many pitfalls of the modern Web, e.g. Cookies, sessions, or authentication.</p>
+
+<p>In order to create Scrapy spiders, a new Scrapy project has to be set up by calling:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>scrapy startproject mySpider
+</code></pre></div></div>
+
+<p>This creates a new subdirectory in the current directory called <code class="highlighter-rouge">mySpider</code> with a specific directory structure needed by Scrapy.</p>
+
+<p>New spiders are then defined as <code class="highlighter-rouge">.py</code> files inside of <code class="highlighter-rouge">mySpider/mySpider</code>. Here’s an example for scraping the titles from our books page:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># -*- coding: utf-8 -*-
+</span><span class="kn">import</span> <span class="nn">scrapy</span>
+
+
+<span class="k">class</span> <span class="nc">BooksSpider</span><span class="p">(</span><span class="n">scrapy</span><span class="o">.</span><span class="n">Spider</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s">'books'</span>
+    <span class="n">allowed_domains</span> <span class="o">=</span> <span class="p">[</span><span class="s">'books.toscrape.com'</span><span class="p">]</span>
+    <span class="n">start_urls</span> <span class="o">=</span> <span class="p">[</span><span class="n">url</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">url</span>
+        <span class="n">titles</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">css</span><span class="p">(</span><span class="s">"article.product_pod h3 a::attr(title)"</span><span class="p">)</span><span class="o">.</span><span class="n">getall</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">title</span> <span class="ow">in</span> <span class="n">titles</span><span class="p">:</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">'Title: {}'</span><span class="o">.</span><span class="nb">format</span><span class="p">(</span><span class="n">title</span><span class="p">))</span>
+</code></pre></div></div>
+
+<p>Run the spider with:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>scrapy runspider books.py
+</code></pre></div></div>
+
+<p>Scrapy’s output is very verbose. The tool is also very mighty, as said before, you it lets you deal with Cookies and session handling, with authentication and caching, or automatically download images. Also, it’s in fact a full-fledged web crawler and lets you handle robot.txt files and crawl depth restrictions, and much more. Check out the <a href="https://docs.scrapy.org/en/latest/">extensive documentation</a> to learn more.</p>
+
+<h3 id="parsel">Parsel</h3>
+<p><em><a href="https://github.com/scrapy/parsel">Parsel</a></em> was first released in 2015 and is in fact part of the Scrapy project, but can also be used on its own.</p>
+
+<p>In Parsel, everything revolves around its <code class="highlighter-rouge">Selector</code> class. A new <code class="highlighter-rouge">Selector</code> object is instantiated with the HTML text to work with:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">parsel</span> <span class="kn">import</span> <span class="n">Selector</span>
+
+<span class="n">selector</span> <span class="o">=</span> <span class="n">Selector</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">html</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Next, you make use of <code class="highlighter-rouge">Selector</code>’s methods like <code class="highlighter-rouge">css</code> or <code class="highlighter-rouge">xpath</code> to access elements from the HTML via CSS selectors or XPath expressions.
+Here’s an example:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">titles</span> <span class="o">=</span> <span class="n">selector</span><span class="o">.</span><span class="n">css</span><span class="p">(</span><span class="s">"article.product_pod h3 a::attr(title)"</span><span class="p">)</span><span class="o">.</span><span class="n">getall</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">title</span> <span class="ow">in</span> <span class="n">titles</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">'Title: {}'</span><span class="o">.</span><span class="nb">format</span><span class="p">(</span><span class="n">title</span><span class="p">))</span>
+</code></pre></div></div>
+
+<p>Parsel is in a sense similar to BeautifulSoup, but more flexible in addressing specific elements because of the CSS selectors (where BeautifulSoup is very limited) and XPath support. If you don’t need all the power from Scrapy, Parsel might be the right tool for you.</p>
+
+<h3 id="scrapely">Scrapely</h3>
+
+<p>Another library also maintained by the Scrapy project is <a href="https://github.com/scrapy/scrapely">Scrapely</a>.
+Scrapely is a library that, in contrast to BeautifulSoup or Parsel does not rely on CSS or XPath selectors, but takes annotated HTML samples as input for supervised learning.
+That is, it uses <em>instance-based wrapper induction</em> to come up with a wrapper for similar pages to the annotated examples.
+Annotation is as simple as providing a url and an accompanying list of key-value pairs, where each key represents a target data field for extraction, and the value is the exact content from the url that shall be extracted into the data field.
+Scrapely will then learn from these examples and attempt to extract content from similar pages into the defined data fields.</p>
+
+<h3 id="robobrowser">RoboBrowser</h3>
+<p>Another not particularly widespread library for web scraping with Python is <a href="https://robobrowser.readthedocs.io">RoboBrowser</a>.
+It is built around the Requests and BeautifulSoup libraries, offering a few additional methods for navigating the browser, working with forms etc.</p>
+
+<p>You do not need to get the website’s HTML yourself, since RoboBrowser has the <code class="highlighter-rouge">open()</code> method implemented:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">robobrowser</span> <span class="kn">import</span> <span class="n">RoboBrowser</span>
+
+<span class="n">browser</span> <span class="o">=</span> <span class="n">RoboBrowser</span><span class="p">(</span><span class="n">history</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">browser</span><span class="o">.</span><span class="nb">open</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>The following snippet demonstrates how you can follow links on a page and use the browser’s functionality to get back to the previous page. This way, we are able to navigate to the detail page of each book, extract the abstract text, and go back to repeat with the next book.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">books</span> <span class="o">=</span> <span class="n">browser</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s">'article.product_pod'</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">book</span> <span class="ow">in</span> <span class="n">books</span><span class="p">:</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="n">book</span><span class="o">.</span><span class="n">h3</span><span class="o">.</span><span class="n">a</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s">'title'</span><span class="p">]</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">'Title: {}'</span><span class="o">.</span><span class="nb">format</span><span class="p">(</span><span class="n">title</span><span class="p">))</span>
+    <span class="n">browser</span><span class="o">.</span><span class="n">follow_link</span><span class="p">(</span><span class="n">book</span><span class="o">.</span><span class="n">h3</span><span class="o">.</span><span class="n">a</span><span class="p">)</span>
+    <span class="n">desc</span> <span class="o">=</span> <span class="n">browser</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">'div'</span><span class="p">,{</span><span class="s">'id'</span><span class="p">:</span><span class="s">'product_description'</span><span class="p">})</span><span class="o">.</span><span class="n">next_sibling</span><span class="o">.</span><span class="n">next_sibling</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">'Description: {}'</span><span class="o">.</span><span class="nb">format</span><span class="p">(</span><span class="n">desc</span><span class="o">.</span><span class="n">get_text</span><span class="p">()))</span>
+    <span class="k">print</span><span class="p">()</span>
+    <span class="n">browser</span><span class="o">.</span><span class="n">back</span><span class="p">()</span>
+</code></pre></div></div>
+
+<h2 id="programming-web-scrapers-in-r">Programming Web Scrapers in R</h2>
+
+<h3 id="rvest">rvest</h3>
+
+<p>Programmers proficient in R can also make use of a library for web scraping which is called <a href="https://rvest.tidyverse.org/">rvest</a>.
+Inspired by BeautifulSoup, it is also a libary that works on HTML and XML and can select parts of these documents with the help of CSS or XPath (“if you’ve a glutton for punishment”) selectors.
+It can extract, modify and submit HTML forms and also simulate navigating the website with a browser (going back and forward, following links etc.).</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">library</span><span class="p">(</span><span class="s1">'rvest'</span><span class="p">)</span><span class="w">
+
+</span><span class="c1">#Using CSS selectors to scrape the title section</span><span class="w">
+</span><span class="n">title_data_html</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">html_nodes</span><span class="p">(</span><span class="n">html</span><span class="p">,</span><span class="s1">'.article.product_pod h3 a::attr(title)'</span><span class="p">)</span><span class="w"> </span><span class="c1"># funktioniert so nicht</span><span class="w">
+
+</span><span class="c1">#Converting the title data to text</span><span class="w">
+</span><span class="n">title_data</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">html_text</span><span class="p">(</span><span class="n">title_data_html</span><span class="p">)</span><span class="w">
+
+</span><span class="c1">#Let's have a look at the title</span><span class="w">
+</span><span class="n">head</span><span class="p">(</span><span class="n">title_data</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<p>By the way, the developer of rvest also created a Javascript bookmarklet called <a href="https://selectorgadget.com/">SelectorGadget</a> that can be used to find the right CSS selectors for desired data to be used in extraction.</p>
+
+<h2 id="programming-web-scrapers-in-java">Programming Web Scrapers in Java</h2>
+
+<h3 id="jsoup">JSoup</h3>
+
+<p>For Java, a simple library for HTML Parsing is <a href="https://jsoup.org/">JSoup</a>, obviously inspired by BeautifulSoup.</p>
+
+<p>Here’s a small example on how to fetch the books’ titles with JSoup. For the sake of brevity, this code is imcomplete with regards to imports and exception handling.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">org.jsoup.Jsoup</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.jsoup.nodes.Document</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.jsoup.select.Elements</span><span class="o">;</span>
+<span class="cm">/* ... additional imports */</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">WebsiteParser</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="kt">int</span> <span class="no">TIMEOUT_IN_MS</span> <span class="o">=</span> <span class="mi">5000</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">String</span> <span class="n">url</span> <span class="o">=</span> <span class="s">"http://books.toscrape.com"</span><span class="o">;</span>
+
+        <span class="nc">Document</span> <span class="n">doc</span> <span class="o">=</span> <span class="nc">Jsoup</span><span class="o">.</span><span class="na">parse</span><span class="o">(</span><span class="k">new</span> <span class="no">URL</span><span class="o">(</span><span class="n">url</span><span class="o">),</span> <span class="no">TIMEOUT_IN_MS</span><span class="o">);</span>
+
+        <span class="nc">Elements</span> <span class="n">titles</span> <span class="o">=</span> <span class="n">doc</span><span class="o">.</span><span class="na">select</span><span class="o">(</span><span class="s">"article.product_pod h3 a[title]"</span><span class="o">);</span>
+
+        <span class="n">titles</span><span class="o">.</span><span class="na">stream</span><span class="o">().</span><span class="na">map</span><span class="o">(</span><span class="n">t</span> <span class="o">-&gt;</span> <span class="n">t</span><span class="o">.</span><span class="na">attr</span><span class="o">(</span><span class="s">"title"</span><span class="o">)).</span><span class="na">forEach</span><span class="o">(</span><span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">::</span><span class="n">println</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>You can see that JSoup is working similarly to BeautifulSoup-</p>
+
+<h3 id="jaunt">Jaunt</h3>
+
+<p><a href="https://jaunt-api.com/">Jaunt</a> is another library for Java, especially suitable in cases where no Javascript is needed, as this is not supported.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">com.jaunt.*</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">BookScraperDemo</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">String</span> <span class="n">url</span> <span class="o">=</span> <span class="s">"http://books.toscrape.com"</span><span class="o">;</span>
+
+        <span class="nc">UserAgent</span> <span class="n">userAgent</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">UserAgent</span><span class="o">();</span> <span class="c1">// create new userAgent (headless browser)</span>
+        <span class="n">userAgent</span><span class="o">.</span><span class="na">visit</span><span class="o">(</span><span class="n">url</span><span class="o">);</span> <span class="c1">// visit url</span>
+
+        <span class="nc">Elements</span> <span class="n">articles</span> <span class="o">=</span> <span class="n">userAgent</span><span class="o">.</span><span class="na">doc</span><span class="o">.</span><span class="na">findEach</span><span class="o">(</span><span class="s">"&lt;article class=product_pod"</span><span class="o">);</span>
+        <span class="nc">Elements</span> <span class="n">titles</span> <span class="o">=</span> <span class="n">articles</span><span class="o">.</span><span class="na">findEach</span><span class="o">(</span><span class="s">"&lt;a title&gt;"</span><span class="o">);</span>
+
+        <span class="n">titles</span><span class="o">.</span><span class="na">forEach</span><span class="o">(</span><span class="n">t</span> <span class="o">-&gt;</span> <span class="o">{</span>
+            <span class="nc">String</span> <span class="n">title</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="na">getAtString</span><span class="o">(</span><span class="s">"title"</span><span class="o">);</span>
+            <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Title: "</span> <span class="o">+</span> <span class="n">title</span><span class="o">);</span>
+        <span class="o">});</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+<p>Jaunt’s “big brother” <a href="https://jauntium.com/">Jauntium</a>, on the other hand, offers Javascript support.
+Jauntium claims to be a lightweight and fast alternative to the much-used Framework Selenium.
+Both Jauntium and Selenium are useful beyond Web Scraping for automated testing of websites, as they completely automate a range of modern Web browsers like Chrome, Firefox, Safari or IE.
+HtmlUnit has been created for the same purpose, but is not good at Javascript/AJAX handling.</p>
+
+<!--### Jwht Scrapper
+
+[jwht scrapper](https://github.com/whimtrip/jwht-scrapper)...-->
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>This post has demonstrated that there are many options available for programmers to implement a custom web scraper.
+Unfortunately, not everyone is a programmer.
+Still, a lot of people out there are in need of some Web scraping solution.</p>
+
+<p>In the next post, we will introduce <em>OXPath</em>, which is one possible solution to this problem.</p>
+
+    </div><!-- .post-content -->
+    <footer class="post-meta">
+      <time class="published"
+        datetime="2019-11-20 00:00">Wednesday, November 20, 2019</time>
+    </footer><!-- .post-meta -->
+  </article><!-- .post -->
+
+  <!-- Next/previous post navigation TBD -->
+  <!--
+  <nav class="block read-next">
+    <h2 class="block-title underline">Read Next</h2>
+    <div class="post-feed">
+      <article class="post">
+        <div class="post-inside">
+          <a class="post-thumbnail" href="#"><img src="#" alt="" /></a>
+          <header class="post-header">
+            <h3 class="post-title"><a href="#" rel="bookmark">Previous Post Title</a></h3>
+          </header>
+          <div class="post-content">
+            <p>Previous post excerpt...</p>
+          </div>
+          <footer class="post-meta">
+            <time class="published" datetime="">Previous post date</time>
+          </footer>
+        </div>
+      </article>
+      <article class="post">
+        <div class="post-inside">
+          <a class="post-thumbnail" href="#"><img src="#" alt="" /></a>
+          <header class="post-header">
+            <h3 class="post-title"><a href="#" rel="bookmark">Next Post Title</a></h3>
+          </header>
+          <div class="post-content">
+            <p>Next post excerpt...</p>
+          </div>
+          <footer class="post-meta">
+            <time class="published" datetime="">Next post date</time>
+          </footer>
+        </div>
+      </article>
+    </div>
+  </nav>
+  -->
+
+      </main><!-- .site-main -->
+      <footer id="colophon" class="site-footer">
+  <p class="site-info">
+    &copy; Stackbit-Fresh. All rights reserved.
+    &nbsp;
+    
+  </p><!-- .site-info -->
+  <a id="to-top" class="to-top" href="#page"><span class="icon-arrow-up" aria-hidden="true"></span><span
+      class="screen-reader-text">Back to top</span></a>
+</footer><!-- .site-footer -->
+
+    </div><!-- .inner -->
+  </div><!-- .site-content -->
+</div><!-- .site -->
+
+        <!-- Scripts -->
+        <script src="/smart-harvesting2/assets/js/plugins.js"></script>
+        <script src="/smart-harvesting2/assets/js/main.js"></script>
+    </body> 
+</html>
