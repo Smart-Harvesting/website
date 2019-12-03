@@ -4,7 +4,31 @@ This repository contains all the necessary files to build the project website fo
 
 The site is served by GitHub pages, but it does not rely on the build mechanism of GitHub Pages, since the theme relies on some unsupported plugins. This means, to change something, you need to clone this repository, make your changes and push back to master. Files are configured to be served from the `docs/` folder.
 
-## Running the Site Locally
+## Workflow to Update the Website
+
+1. Get current status
+
+     a. by cloning
+        
+                git clone <url>
+                
+     b. by pulling 
+        
+                git pull origin master
+
+1. Perform your changes
+
+1. Run the site locally (see below) to preview the changes and check that everything works as expected
+
+1. Add all relevant changes to git (especially those in `docs/` that have been created by jekyll)
+
+        git add <files>
+        
+1. Push changes to remote
+
+        git push origin master
+
+### Running the Site Locally
 
 1. Install a full [Ruby development environment](https://jekyllrb.com/docs/installation/)
 
