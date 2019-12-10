@@ -1,0 +1,237 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Monitoring - Smart Harvesting II</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="google" content="notranslate" />
+        <link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,700,700i" rel="stylesheet">
+        <link rel="stylesheet" href="/smart-harvesting2/assets/css/main.css">
+        
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css"/>
+        
+    </head>
+    <body>
+        <div id="page" class="site style-overflow palette-blue">
+  <header id="masthead" class="site-header dark">
+  <div class="site-header-wrap">
+    <div class="site-header-inside">
+      <div class="site-branding">
+        
+        
+        <div class="site-identity">
+          
+          <p class="site-title"><a href='/smart-harvesting2/'>Smart Harvesting II</a></p>
+          
+          
+          
+        </div><!-- .site-identity -->
+        
+        <button id="menu-toggle" class="menu-toggle"><span class="screen-reader-text">Menu</span><span class="icon-menu"
+            aria-hidden="true"></span></button>
+        
+      </div><!-- .site-branding -->
+      
+      <nav id="main-navigation" class="site-navigation" aria-label="Main Navigation">
+        <div class="site-nav-wrap">
+          <div class="site-nav-inside">
+            <ul class="menu">
+              
+              <li class="menu-item ">
+                <a href="/smart-harvesting2/">Home</a>
+              </li>
+              
+              <li class="menu-item ">
+                <a href="/smart-harvesting2/people/">People</a>
+              </li>
+              
+              <li class="menu-item ">
+                <a href="/smart-harvesting2/code/">Code</a>
+              </li>
+              
+              <li class="menu-item ">
+                <a href="/smart-harvesting2/blog/">Blog</a>
+              </li>
+              
+              <li class="menu-item ">
+                <a href="/smart-harvesting2/publications/">Publications</a>
+              </li>
+              
+              <li class="menu-item ">
+                <a href="/smart-harvesting2/about/">About</a>
+              </li>
+              
+            </ul><!-- .menu -->
+            
+            
+          </div><!-- .site-nav-inside -->
+        </div><!-- .site-nav-wrap -->
+      </nav><!-- .site-navigation -->
+      
+    </div><!-- .site-header-inside -->
+  </div><!-- .site-header-wrap -->
+</header><!-- .site-header -->
+
+  <div id="content" class="site-content">
+    <div class="inner">
+      <main id="main" class="site-main">
+          <article class="post page post-full">
+    <header class="post-header">
+      <h1 class="post-title underline">Monitoring</h1>
+    </header><!-- .post-header -->
+    
+    
+    
+    
+    <div class="post-content">
+      In Smart Harvesting II, we did some research on scheduling data ingestion for curators.
+In particular, we tried to see if we can model curators' decisions to ingest a particular dataset at a given point in time, by employing knowledge from historical data and features of the data streams (in our case, proceedings of conferences).
+Our first approach at this problem has been published as "Prioritizing and Scheduling Conferences for Metadata Harvesting in dblp" at JCDL 2018.
+See the <a href="/smart-harvesting2/publications">Publications</a> page for more details.
+
+Below is a demonstration of the tool we envision with our work. Each conference is assigned a score which is based on temporal relations of past data ingestions, and features like rating, size or internationality.
+The curator can decide which features to include in the final score.
+The conferences with the highest scores should then be top priority for ingestion.
+
+<br/>
+
+For the demo, we assume that the current date is in 2018-08.
+
+<br/>
+
+<form id="features">
+    <input type="radio" name="feature" value="ratings"/> Ratings<br/>
+    <input type="radio" name="feature" value="activity"/> Activity<br/>
+    <input type="radio" name="feature" value="activity_rating"/> Activity+Rating<br/>
+    <br/>
+    <input type="submit" id="btnSubmit" value="Submit">
+</form>
+    
+<br/>
+
+<table id="results" class="display">
+    <thead>
+    <tr>
+        <th>Conference Key</th>
+        <th>Score</th>
+        <th>Interval</th>
+        <th>Month</th>
+        <th>Delay</th>
+        <th>Last Entry</th>
+        <th>Expected Next</th>
+        <th>Activity</th>
+        <th>Rating</th>
+        <th>Prominence</th>
+        <th>Internationality</th>
+        <th>Size</th>
+        <th>Affiliations</th>
+        <th>Log score</th>
+    </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+    </tbody>
+</table>
+
+<!-- http://blog.emmatosch.com/2016/03/09/using-custom-javascript-in-jekyll-blogs.html -->
+
+    </div><!-- .post-content -->
+  </article><!-- .post -->
+
+      </main><!-- .site-main -->
+      <footer id="colophon" class="site-footer">
+  <p class="site-info">
+    &copy; IR-Group, TH Köln. All rights reserved.
+    &nbsp;
+    
+  </p><!-- .site-info -->
+  <a id="to-top" class="to-top" href="#page"><span class="icon-arrow-up" aria-hidden="true"></span><span
+      class="screen-reader-text">Back to top</span></a>
+</footer><!-- .site-footer -->
+
+    </div><!-- .inner -->
+  </div><!-- .site-content -->
+</div><!-- .site -->
+
+        <!-- Scripts -->
+        <script src="/smart-harvesting2/assets/js/plugins.js"></script>
+        <script src="/smart-harvesting2/assets/js/main.js"></script>
+        
+        <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
+        <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+        
+        <script type="text/javascript">
+        function refreshTable(jsonData){
+    var table;
+    if ($.fn.dataTable.isDataTable('#results')) {
+        table = $('#results').DataTable();
+        table.clear();
+        table.rows.add(jsonData).draw();
+    }
+    else {
+        table = $('#results').DataTable( {
+            data: jsonData,
+            columns: [
+                { data: 'conf_key' },
+                { data: 'score', "searchable": false  },
+                { data: 'interval', "searchable": false  },
+                { data: 'month', "searchable": false  },
+                { data: 'delay', "searchable": false  },
+                { data: 'last_entry', "searchable": false  },
+                { data: 'expected', "searchable": false  },
+                { data: 'activity', "searchable": false  },
+                { data: 'rating', "searchable": false  },
+                { data: 'prominence', "searchable": false  },
+                { data: 'internationality', "searchable": false  },
+                { data: 'size', "searchable": false  },
+                { data: 'affiliations', "searchable": false  },
+                { data: 'log', "searchable": false  }
+            ],
+            lengthChange: false,
+            order: [[ 1, 'desc' ]],
+            pageLength: 10,
+            scrollX: true,
+            scrollY: 500,
+            scrollCollapse: true,
+            } );
+    }
+};
+
+$("#btnSubmit").click(function(){
+    var value=$("input:radio[name=feature]:checked").val();
+    if(value=="ratings"){
+        $.getJSON("../assets/data/rating.json", function(json) {
+            refreshTable(json)
+        });
+    }
+    else if(value == "activity"){
+        $.getJSON("../assets/data/active.json", function(json) {
+            refreshTable(json)
+        });
+    }
+    else if(value == "activity_rating"){
+        $.getJSON("../assets/data/active_rating.json", function(json) {
+            refreshTable(json)
+        });    
+    }
+    return false;
+});
+
+
+
+        </script>
+        
+        
+    </body> 
+</html>

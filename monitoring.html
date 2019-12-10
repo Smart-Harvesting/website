@@ -1,0 +1,68 @@
+---
+title: Monitoring
+layout: page
+jsarr:
+     - tables/monitoring.js
+---
+
+In Smart Harvesting II, we did some research on scheduling data ingestion for curators.
+In particular, we tried to see if we can model curators' decisions to ingest a particular dataset at a given point in time, by employing knowledge from historical data and features of the data streams (in our case, proceedings of conferences).
+Our first approach at this problem has been published as "Prioritizing and Scheduling Conferences for Metadata Harvesting in dblp" at JCDL 2018.
+See the <a href="{{ site.baseurl }}/publications">Publications</a> page for more details.
+
+Below is a demonstration of the tool we envision with our work. Each conference is assigned a score which is based on temporal relations of past data ingestions, and features like rating, size or internationality.
+The curator can decide which features to include in the final score.
+The conferences with the highest scores should then be top priority for ingestion.
+
+<br/>
+
+For the demo, we assume that the current date is in 2018-08.
+
+<br/>
+
+<form id="features">
+    <input type="radio" name="feature" value="ratings"/> Ratings<br/>
+    <input type="radio" name="feature" value="activity"/> Activity<br/>
+    <input type="radio" name="feature" value="activity_rating"/> Activity+Rating<br/>
+    <br/>
+    <input type="submit" id="btnSubmit" value="Submit">
+</form>
+    
+<br/>
+
+<table id="results" class="display">
+    <thead>
+    <tr>
+        <th>Conference Key</th>
+        <th>Score</th>
+        <th>Interval</th>
+        <th>Month</th>
+        <th>Delay</th>
+        <th>Last Entry</th>
+        <th>Expected Next</th>
+        <th>Activity</th>
+        <th>Rating</th>
+        <th>Prominence</th>
+        <th>Internationality</th>
+        <th>Size</th>
+        <th>Affiliations</th>
+        <th>Log score</th>
+    </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+    </tbody>
+</table>
+
+<!-- http://blog.emmatosch.com/2016/03/09/using-custom-javascript-in-jekyll-blogs.html -->

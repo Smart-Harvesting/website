@@ -1,20 +1,29 @@
 <!doctype html>
 <html>
-    <head>    
-        
+    <head>
         <title>{% assign title_is_not_empty = page.title | is_not_empty %}{% if title_is_not_empty %}{{ page.title }} - {% endif %}{{ site.title }}</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="google" content="notranslate" />
         <link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,700,700i" rel="stylesheet">
         <link rel="stylesheet" href="{{ 'assets/css/main.css' | relative_url }}">
-        
+        {% if page.jsarr %}
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css"/>
+        {% endif %}
     </head>
     <body>
-        
         {{ content }}
         <!-- Scripts -->
         <script src="{{ 'assets/js/plugins.js' | relative_url }}"></script>
         <script src="{{ 'assets/js/main.js' | relative_url }}"></script>
+        {% if page.jsarr %}
+        <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
+        <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+        {% for js in page.jsarr %}
+        <script type="text/javascript">
+        {% include {{ js }} %}
+        </script>
+        {% endfor %}
+        {% endif %}
     </body> 
 </html>
