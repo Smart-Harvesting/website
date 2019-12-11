@@ -99,13 +99,10 @@ For the demo, we assume that the current date is in 2018-08.
 
 <br/>
 
-<form id="features">
-    <input type="radio" name="feature" value="ratings"/> Ratings<br/>
-    <input type="radio" name="feature" value="activity"/> Activity<br/>
-    <input type="radio" name="feature" value="activity_rating"/> Activity+Rating<br/>
-    <br/>
-    <input type="submit" id="btnSubmit" value="Submit">
-</form>
+View the ranking that is based on the feature (<a id="reset" href="#">reset</a>):<br/>
+<a id="rating" href="#">Rating</a><br/>
+<a id="activity" href="#">Activity</a><br/>
+<a id="activity_rating" href="#">Activity+Rating</a><br/>
     
 <br/>
 
@@ -208,27 +205,35 @@ For the demo, we assume that the current date is in 2018-08.
     }
 };
 
-$("#btnSubmit").click(function(){
-    var value=$("input:radio[name=feature]:checked").val();
-    if(value=="ratings"){
-        $.getJSON("../assets/data/rating.json", function(json) {
-            refreshTable(json)
-        });
-    }
-    else if(value == "activity"){
-        $.getJSON("../assets/data/active.json", function(json) {
-            refreshTable(json)
-        });
-    }
-    else if(value == "activity_rating"){
-        $.getJSON("../assets/data/active_rating.json", function(json) {
-            refreshTable(json)
-        });    
-    }
-    return false;
+$(document).ready( function () {
+    $.getJSON("../assets/data/baseline.json", function(json) {
+        refreshTable(json)
+    });
+} );
+
+$("a#rating").click(function(){
+   $.getJSON("../assets/data/rating.json", function(json) {
+        refreshTable(json)
+    });
+});
+ 
+$("a#activity").click(function(){
+   $.getJSON("../assets/data/active.json", function(json) {
+        refreshTable(json)
+    });
+});
+ 
+$("a#activity_rating").click(function(){
+    $.getJSON("../assets/data/active_rating.json", function(json) {
+        refreshTable(json)
+    }); 
 });
 
-
+$("a#reset").click(function(){
+    $.getJSON("../assets/data/baseline.json", function(json) {
+        refreshTable(json)
+    });
+});
 
         </script>
         

@@ -34,24 +34,32 @@ function refreshTable(jsonData){
     }
 };
 
-$("#btnSubmit").click(function(){
-    var value=$("input:radio[name=feature]:checked").val();
-    if(value=="ratings"){
-        $.getJSON("../assets/data/rating.json", function(json) {
-            refreshTable(json)
-        });
-    }
-    else if(value == "activity"){
-        $.getJSON("../assets/data/active.json", function(json) {
-            refreshTable(json)
-        });
-    }
-    else if(value == "activity_rating"){
-        $.getJSON("../assets/data/active_rating.json", function(json) {
-            refreshTable(json)
-        });    
-    }
-    return false;
+$(document).ready( function () {
+    $.getJSON("../assets/data/baseline.json", function(json) {
+        refreshTable(json)
+    });
+} );
+
+$("a#rating").click(function(){
+   $.getJSON("../assets/data/rating.json", function(json) {
+        refreshTable(json)
+    });
+});
+ 
+$("a#activity").click(function(){
+   $.getJSON("../assets/data/active.json", function(json) {
+        refreshTable(json)
+    });
+});
+ 
+$("a#activity_rating").click(function(){
+    $.getJSON("../assets/data/active_rating.json", function(json) {
+        refreshTable(json)
+    }); 
 });
 
-
+$("a#reset").click(function(){
+    $.getJSON("../assets/data/baseline.json", function(json) {
+        refreshTable(json)
+    });
+});
