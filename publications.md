@@ -13,7 +13,7 @@ layout: page
 
 ### [2019]()
 
-**Learning. Knowledge. Data. Analytics. (LWDA), September 30 - October 2, 2019**
+**Learning. Knowledge. Data. Analytics. (LWDA), September 30 - October 2, 2019**  
 Presentation of our work on "Prioritizing and Scheduling Conferences for Metadata Harvesting in Dblp" (resubmit). Slides available [here](https://zenodo.org/record/3466811).
 
 ### [2018]()
@@ -25,7 +25,7 @@ Presentation of our work on "Prioritizing and Scheduling Conferences for Metadat
 Project presentation. Slides available [here](https://opus4.kobv.de/opus4-bib-info/frontdoor/index/index/searchtype/collection/id/16752/docId/3626/start/2/rows/20) (German).  
 Hands-on Lab on "Smart Harvesting with OXPath". Slides available [here](https://opus4.kobv.de/opus4-bib-info/frontdoor/index/index/searchtype/collection/id/16865/docId/15738/start/0/rows/20).
 
-**Invitation ID@NRW 2018, March 1, 2018**
+**Invitation ID@NRW 2018, March 1, 2018**  
 Poster presentation. The Graduate Institute NRW, section ‚Digitalisierung in Wirtschaft und Gesellschaft‘ organized this conference at Rheinische Fachhochschule, Köln.
 
 **InetBib-ODOK-Tagung, February 21-23, 2018**  
