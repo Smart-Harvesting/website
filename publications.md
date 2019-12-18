@@ -25,6 +25,9 @@ Presentation of our work on "Prioritizing and Scheduling Conferences for Metadat
 Project presentation. Slides available [here](https://opus4.kobv.de/opus4-bib-info/frontdoor/index/index/searchtype/collection/id/16752/docId/3626/start/2/rows/20) (German).  
 Hands-on Lab on "Smart Harvesting with OXPath". Slides available [here](https://opus4.kobv.de/opus4-bib-info/frontdoor/index/index/searchtype/collection/id/16865/docId/15738/start/0/rows/20).
 
+**Frühjahrstagung FIS Bildung, May 23, 2018**  
+Project presentation. "Smartes Harvesten von Literaturdaten. Das DFG-Projekt Smart Harvesting II". Slides (German) available [here](https://www.fachportal-paedagogik.de/pdf/FIS_Bildung_Tagungsdokumentation_2018/schaer_smartes_harvesten_von_literaturdaten.pdf).
+
 **ID@NRW 2018, March 1, 2018**  
 Poster presentation. The Graduate Institute NRW, section ‚Digitalisierung in Wirtschaft und Gesellschaft‘ organized this conference at Rheinische Fachhochschule, Köln.
 
