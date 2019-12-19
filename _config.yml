@@ -44,7 +44,6 @@ kramdown:
   enable_coderay: false
 
 #Build
-destination: docs
 encoding: "utf-8"
 markdown_ext: "markdown,mkdown,mkdn,mkd,md"
 plugins:
