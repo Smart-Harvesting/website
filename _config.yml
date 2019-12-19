@@ -59,4 +59,7 @@ exclude:
   - vendor/ruby/
   - LICENSE.md
   - LICENSE
+  - LICENSE.theme.md
   - README.md
+  - README.theme.md
+  - getpubs.py
