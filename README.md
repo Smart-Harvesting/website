@@ -1,8 +1,8 @@
 # Smart Harvesting II Project Website
 
-This repository contains all the necessary files to build the project website for "Smart Harvesting II".
+This repository contains all the necessary files to build the content for the project website for "Smart Harvesting II". The generated files to to the [smart-harvesting.github.io](https://github.com/Smart-Harvesting/smart-harvesting.github.io) repository.
 
-The site is served by GitHub pages, but it does not rely on the build mechanism of GitHub Pages, since the theme relies on some unsupported plugins. This means, to change something, you need to clone this repository, make your changes and push back to master. Files are configured to be served from the `docs/` folder.
+The site is served by GitHub pages, but it does not rely on the build mechanism of GitHub Pages, since the theme relies on some unsupported plugins. This means, to change something, you need to clone this repository, make your changes, copy the generated files over to the website's repository and push back to master in both repositories.
 
 ## Workflow to Update the Website
 
@@ -20,11 +20,15 @@ The site is served by GitHub pages, but it does not rely on the build mechanism 
 
 1. Run the site locally (see below) to preview the changes and check that everything works as expected
 
-1. Add all relevant changes to git (especially those in `docs/` that have been created by jekyll)
+1. Copy the generated content (files in `_site/` that have been created by jekyll) over to the website's repository:
+
+          $ cp -r _site/* path/to/smart-harvesting.github.io/
+
+1. In both repos: Add all relevant changes to git
 
         git add <files>
         
-1. Push changes to remote
+1. In both repos: Push changes to remote
 
         git push origin master
 
