@@ -20,8 +20,10 @@ layout: page
 <img style="float: right;" src="../images/GESIS-Logo.svg.png" alt="GESIS"
 	title="GESIS" width="200"/>
 ### GESIS - Leibniz-Institute for the Social Sciences
-- [Dr. Brigitte Mathiak](https://www.gesis.org/person/brigitte.mathiak)
+- [Dr. Brigitte Mathiak](https://www.gesis.org/en/institute/staff/person/brigitte.mathiak)
 - Nadine Dulisch, M.A.
+- [Zeljko Carevic](https://www.gesis.org/en/institute/staff/person/Zeljko.Carevic)
+- [Tobias Backes](https://www.gesis.org/en/institute/staff/person/Tobias.Backes)
 <br/><br/>
 
 
