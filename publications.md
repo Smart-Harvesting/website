@@ -50,3 +50,15 @@ Poster presentation to short paper "Enriching Existing Test Collections with OXP
 ## Publications
 
 {% include_relative sh2.html %}
+
+<div>
+<b>OXPath-Based Data Acquisition for dblp</b>. <br/>
+In: 2017 ACM/IEEE Joint Conference on Digital Libraries (JCDL), pages 319-320. ACM, New York, NY, USA, 2017.
+
+<br/>
+Christopher Michels, Ruslan R. Fayzrakhmanov, Michael Ley, Emanuel Sallinger and Ralf Schenkel.
+<br/>
+<a href="https://doi.org/10.1109/JCDL.2017.7991609">[doi]</a>&nbsp;
+<a href="https://ieeexplore.ieee.org/document/7991609">[pdf]</a>&nbsp;
+<a href="https://dblp.org/rec/bibtex/conf/jcdl/MichelsFLSS17">[BibTeX]</a>&nbsp;
+</div>
