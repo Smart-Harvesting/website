@@ -3,23 +3,32 @@ layout: post
 title:  Integrating OXPath into the DDA
 categories: [blog]
 tags: [web scraping]
+thumb_img_path: images/dda_oxpath.png
+content_img_path: images/dda_oxpath.png
 excerpt_separator: <!--more-->
+date: '2020-02-10'
 ---
 
 In this post, we present one interesting outcome of the Smart Harvesting project, which is the integration of a web scraping module utilizing OXPath into the Document Deposit Assistant (DDA).
 
-<!--more-->
-
 To cite from the project's README: "The Document Deposit Assistant (DDA) is a web application which is able to import massive amounts of content and their metadata from a variety of data sources into a target repository."
-These data sources include, for example, OAI-PMH sources, unAPI sources, as well as Excel templates or BibTeX files.
+These data sources include, for example, OAI-PMH sources, unAPI sources, as well as Excel templates, XML or BibTeX files.
+
+<!--more-->
 
 Since a lot of bibliographic information is nowadays available on the web, we figured that it would be useful to include these websites as additional sources for the DDA.
 To accomplish this, a web scraping module was required.
 From our experience with OXPath, we decided to utilize this technology to integrate it with the DDA.
 
+With this new module, you are now enabled to upload an existing OXPath script (which you might have written and tested locally) as a "Publication Source" in the dda.
 
+![Upload popup for OXPath script](/images/dda_oxpath1.png)
 
-...
+A click on "Upload&Harvest" fires up the OXPath engine to evaluate the script in a headless browser and perform the scripted extraction. In case you try to run a syntactically incorrect script, you get immediate feedback that the file is not valid, so you can correct it and try again.
+
+When the web scraping process is finished, the resulting publication metadata is available in the DDA as so-called "metadata bundles", which can then be ingested into the target system, e.g. a DSpace installation of a library.
+
+![Result bundle from scraping](/images/dda_oxpath4.png)
 
 The DDA is an open-source project available at https://git.gesis.org/dda/dda-wizard/.
 
